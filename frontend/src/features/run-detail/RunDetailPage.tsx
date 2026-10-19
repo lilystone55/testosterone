@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 import { API_BASE, apiClient } from "../../lib/api-client";
 import { Badge, Button, Card, KeyValue, PageHeader, Spinner, StatusPill, TestPyramid } from "../../components/ui";
@@ -134,79 +135,17 @@ export function RunDetailPage() {
         )}
       </Card>
 
-      <Card
-        title={
-          <button
-            type="button"
-            onClick={() => setArtifactsExpanded((expanded) => !expanded)}
-            className="flex items-center gap-2 text-sm font-semibold text-ink-100"
-          >
-            <span className={`transition-transform ${artifactsExpanded ? "rotate-90" : ""}`}>
-              &#9656;
-            </span>
-            Artifacts
-          </button>
-        }
-      >
-        {artifactsExpanded &&
-          (reports.artifact_links.length === 0 ? (
-            <p className="text-sm text-ink-400">No artifacts recorded.</p>
-          ) : (
-            <ul className="space-y-1 text-sm text-ink-300">
-              {reports.artifact_links.map((artifact) => (
-                <li key={artifact} className="font-mono text-xs">
-                  {artifact}
-                </li>
-              ))}
-            </ul>
-          ))}
-      </Card>
-
-      <Card title="AI Failure Summary">
-        {run.returncode === 0 ? (
-          <p className="text-sm text-ink-400">Summary only applies to failed runs.</p>
-        ) : aiSummaryQuery.isLoading ? (
+      {aiSummaryQuery.isLoading ? (
+        <Card title="AI Failure Summary">
           <p className="text-sm text-ink-300">Loading AI summary...</p>
-        ) : aiSummaryQuery.isError || !aiSummaryQuery.data ? (
-          <p className="text-sm text-danger-400">Failed to load AI summary.</p>
-        ) : aiSummaryQuery.data.status === "available" ? (
-          <article className="space-y-1">
-            <p className="text-sm text-ink-100">{aiSummaryQuery.data.summary_text}</p>
-            <p className="text-xs text-ink-400">
-              Confidence: {aiSummaryQuery.data.confidence ?? "unknown"} | Model: {aiSummaryQuery.data.model ?? "unknown"}
-              {IS_STATIC_BUILD ? " | Generated when this snapshot was built" : ""}
-            </p>
-          </article>
-        ) : IS_STATIC_BUILD ? (
-          <p className="text-sm text-ink-300">
-            {aiSummaryQuery.data.limitations.includes("summary_not_generated")
-              ? AI_SUMMARY_SNAPSHOT_MESSAGE
-              : `The AI summary could not be generated when this snapshot was built (${aiSummaryQuery.data.error_code ?? "not_available"}).`}
-          </p>
-        ) : (
-          <p className="text-sm text-ink-400">
-            No summary generated ({aiSummaryQuery.data.error_code ?? "not_available"}).
-          </p>
-        )}
-        <Button
-          className="mt-3"
-          // A snapshot has nothing to generate with; the export already did it, or explains why not above.
-          disabled={IS_STATIC_BUILD}
-          title={IS_STATIC_BUILD ? "Read-only demo: summaries are generated when the snapshot is built." : undefined}
-          onClick={async () => {
-            setAiError(null);
-            try {
-              await apiClient.generateRunAiSummary(runId, true);
-              await aiSummaryQuery.refetch();
-            } catch (err) {
-              setAiError(err instanceof Error ? err.message : String(err));
-            }
-          }}
-        >
-          Generate AI Summary
-        </Button>
-        {aiError ? <p className="mt-2 text-sm text-danger-400">{aiError}</p> : null}
-      </Card>
+        </Card>
+      ) : aiSummaryQuery.isError || !aiSummaryQuery.data ? null : (
+        <Card title="AI Failure Summary">
+          <div className="prose prose-sm max-w-none">
+            <ReactMarkdown>{aiSummaryQuery.data.summary_text}</ReactMarkdown>
+          </div>
+        </Card>
+      )}
     </section>
   );
 }
