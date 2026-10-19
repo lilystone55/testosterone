@@ -27,7 +27,15 @@ cycles:
     stages:
       - name: api
         equipment: pytest
-        args: ["-m", "smoke", "--maxfail=1"]
+        args: ["-q"]
+
+  # Example: marker-based smoke test (requires tests marked with @pytest.mark.smoke)
+  # smoke-test-filtered:
+  #   description: Fast sanity sweep using test markers.
+  #   stages:
+  #     - name: api
+  #       equipment: pytest
+  #       args: ["-m", "smoke", "--maxfail=1"]
 
   nightly-build:
     description: Full suite executed on cron.
@@ -35,10 +43,11 @@ cycles:
       - name: api
         equipment: pytest
         args: ["-q"]
-      - name: ui-bdd
-        equipment: behavex
-        workers: 8
-        timeout_s: 1800
+      # Uncomment if your project uses BehaveX for UI/BDD tests
+      # - name: ui-bdd
+      #   equipment: behavex
+      #   workers: 8
+      #   timeout_s: 1800
 """
 
 
