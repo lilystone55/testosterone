@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 First release meant for PyPI (`pip install testo-core`).
 
 ### Added
+- Open-source community files: `SECURITY.md` (private vulnerability reporting), `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1), `CITATION.cff`, issue forms (`.github/ISSUE_TEMPLATE/*.yml`, blank issues off, links to Discussions and the security form) and `.github/dependabot.yml` (weekly grouped updates for pip, npm and GitHub Actions, `chore(deps)` commits with the `no-changelog` label; `commitlint.config.js` skips Dependabot's long commit bodies). `CONTRIBUTING.md` gains "Finding something to work on" and a note on the AI-agent files, and its Quickstart link is fixed
+- README: animated walkthroughs of the web UI and of the CLI (`docs/assets/demo/`)
 - `docs/Prompts & Snippets/Setup Prompts.md`: copy-paste prompts for an AI coding assistant to install Testosterone in another project, write its `testosterone.yaml`, run it in GitHub Actions or GitLab CI, open the web UI and troubleshoot. They install from GitHub until `testo-core` is on PyPI. Command Reference no longer calls `doctor`, `clean`, `watch` and `init` unimplemented
 
 ### Fixed

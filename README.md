@@ -22,6 +22,13 @@ What you're looking at: Testosterone testing itself (its own test suite) and `fa
 small app whose routes fail on purpose. CI runs both cycles and publishes the real results as a
 read-only static site.
 
+<details>
+<summary><strong>Watch a walkthrough of the UI</strong> (animated, about 1 minute)</summary>
+
+![Walkthrough of the web UI: starting the fake-api cycle from the browser with live stage status and event stream, then browsing the results](docs/assets/demo/ui-walkthrough.gif)
+
+</details>
+
 ## Why
 
 Most projects run several test frameworks, each with its own command, report format and CI
@@ -66,6 +73,13 @@ pip install -e ".[dev]"
 testo run --cycle sample-pytests      # run a cycle from testosterone.yaml
 testo report --cycle sample-pytests   # build the Allure report for it
 ```
+
+<details>
+<summary><strong>Watch it run</strong>: install, <code>testo doctor</code>, then a cycle against the deliberately broken fake-api app</summary>
+
+![Terminal recording: installing from a checkout, testo doctor passing, then showing and running the fake-api cycle](docs/assets/demo/cli-install-and-run.gif)
+
+</details>
 
 Adding Testosterone to your own project with an AI coding assistant? Paste one of the
 [Setup Prompts](docs/Prompts%20&%20Snippets/Setup%20Prompts.md).
