@@ -4,6 +4,7 @@
 
 [![CI](https://github.com/taltal-beep/testosterone/actions/workflows/ci.yml/badge.svg)](https://github.com/taltal-beep/testosterone/actions/workflows/ci.yml)
 [![Pages demo](https://github.com/taltal-beep/testosterone/actions/workflows/pages-demo.yml/badge.svg)](https://github.com/taltal-beep/testosterone/actions/workflows/pages-demo.yml)
+[![PyPI](https://img.shields.io/pypi/v/testo-core)](https://pypi.org/project/testo-core/)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -45,6 +46,16 @@ backend (`testo_api`, `/api/v1`, live runs over server-sent events), a React fro
 [ARCHITECTURE.md](ARCHITECTURE.md) for how the pieces fit.
 
 ## Quickstart
+
+Install the CLI from PyPI and point it at your own tests:
+
+```bash
+pip install testo-core            # the `testo` CLI; add [api] for the REST API, [db] for Postgres
+testo config init                 # writes a starter testosterone.yaml; edit its stages
+testo run --cycle smoke-test      # run a cycle from it
+```
+
+Or work from a checkout of this repository, which ships sample cycles:
 
 ```bash
 git clone https://github.com/taltal-beep/testosterone.git
